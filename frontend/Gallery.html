@@ -1,0 +1,104 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+}
+
+header {
+    background: #1a237e;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card p {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<header>GALLERY</header>
+
+<div class="gallery" id="gallery"></div>
+
+<script>
+async function loadGallery() {
+    try {
+        const res = await fetch("http://localhost:3000/gallery");
+        const data = await res.json();
+
+        const gallery = document.getElementById("gallery");
+
+        if (!data || data.length === 0) {
+            gallery.innerHTML = `
+                <p style="padding:30px; text-align:center;">
+                No photos available. Admin can add images via dashboard.
+                </p>`;
+            return;
+        }
+
+        gallery.innerHTML = "";
+
+        data.forEach((img, index) => {
+            gallery.innerHTML += `
+                <div class="card">
+                    <img src="${img.image_url}" alt="Gallery Image ${index + 1}">
+                    <p>Photo ${index + 1}</p>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        document.getElementById("gallery").innerHTML =
+            "<p style='text-align:center;'>Error loading gallery</p>";
+        console.error(err);
+    }
+}
+
+// load on page start
+loadGallery();
+</script>
+
+</body>
+</html>
+```

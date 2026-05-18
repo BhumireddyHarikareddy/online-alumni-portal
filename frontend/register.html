@@ -1,0 +1,320 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Your Account</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="register.css">
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+emailjs.init("qCTuQjIZofYi7Ibnm");
+})();
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+<div class="header-left">
+<img src="logo.png">
+<div>
+<h1>Master of Computer Applications Alumni Association</h1>
+<p>JNTUA CEA</p>
+</div>
+</div>
+
+<div class="header-right">
+<p id="current-date"></p>
+<p id="current-time"></p>
+</div>
+</div>
+
+<div class="container">
+<div class="card">
+
+<h2>Create Your Account</h2>
+
+<form id="registerForm">
+
+<div class="row">
+<div class="field">
+<label>First Name</label>
+<input type="text" name="first_name" required>
+</div>
+
+<div class="field">
+<label>Last Name</label>
+<input type="text" name="last_name" required>
+</div>
+</div>
+
+
+<label>Email</label>
+<input type="email" name="email" id="email" required>
+
+<button type="button" id="sendOtpBtn" disabled>Verify OTP</button>
+
+<div id="otpSection" style="display:none;">
+<label>Enter OTP</label>
+<input type="text" id="otpInput">
+<button type="button" id="verifyOtpBtn">Confirm OTP</button>
+</div>
+
+
+<label>Password</label>
+<input type="password" name="password" required>
+
+
+<div class="row">
+<div class="field">
+<label>Admission Number</label>
+<input type="text" name="admission_number">
+</div>
+
+<div class="field">
+<label>Branch</label>
+<input type="text" name="branch">
+</div>
+</div>
+
+
+<div class="row">
+<div class="field">
+<label>Passed Out Year</label>
+<input type="number" name="passed_out_year">
+</div>
+
+<div class="field">
+<label>Present Working</label>
+<select name="present_working" id="present-working">
+<option value="">Select</option>
+<option>Working</option>
+<option>Studying</option>
+<option>Not Working</option>
+</select>
+</div>
+</div>
+
+
+<div class="row">
+<div class="field">
+<label>Designation</label>
+<input type="text" name="designation">
+</div>
+
+<div class="field">
+<label>City</label>
+<input type="text" name="city">
+</div>
+</div>
+
+
+<div class="row" id="company-row" style="display:none;">
+<div class="field">
+<label>Company / Organization</label>
+<input type="text" name="company">
+</div>
+</div>
+
+
+<div class="row" id="institution-row" style="display:none;">
+<div class="field">
+<label>University / Institution</label>
+<input type="text" name="institution">
+</div>
+</div>
+
+
+<label>Phone</label>
+<input type="text" name="phone">
+
+
+<div class="row">
+<div class="field">
+<label>Gender</label>
+<select name="gender">
+<option value="">Select</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field">
+<label>Date of Birth</label>
+<input type="date" name="dob">
+</div>
+</div>
+
+
+<label>Placement Type</label>
+<select name="placement_type">
+<option value="">Select</option>
+<option>On Campus</option>
+<option>Off Campus</option>
+</select>
+
+
+<button type="submit" class="create-btn">Create Account</button>
+
+<p class="login-link">
+Already registered?
+<a href="login.html">Login here</a>
+</p>
+
+</form>
+
+<p id="message"></p>
+
+</div>
+</div>
+
+
+<script>
+
+// DATE TIME
+function updateDateTime(){
+const now=new Date();
+document.getElementById("current-date").innerText=now.toLocaleDateString();
+document.getElementById("current-time").innerText=now.toLocaleTimeString();
+}
+setInterval(updateDateTime,1000);
+
+
+// SHOW COMPANY / INSTITUTION
+document.getElementById("present-working").addEventListener("change",function(){
+
+const compRow=document.getElementById("company-row");
+const instRow=document.getElementById("institution-row");
+
+compRow.style.display="none";
+instRow.style.display="none";
+
+if(this.value==="Working"){
+compRow.style.display="flex";
+}
+
+if(this.value==="Studying"){
+instRow.style.display="flex";
+}
+
+});
+
+
+// OTP SYSTEM
+let generatedOTP="";
+let otpVerified=false;
+
+const emailField=document.getElementById("email");
+const sendBtn=document.getElementById("sendOtpBtn");
+const otpSection=document.getElementById("otpSection");
+const verifyBtn=document.getElementById("verifyOtpBtn");
+
+
+// Enable button when email entered
+emailField.addEventListener("input",()=>{
+
+if(emailField.value!=""){
+sendBtn.disabled=false;
+}else{
+sendBtn.disabled=true;
+}
+
+});
+
+
+// SEND OTP
+sendBtn.onclick=function(){
+
+generatedOTP=Math.floor(100000+Math.random()*900000);
+
+const params={
+email:emailField.value,
+otp:generatedOTP
+};
+
+emailjs.send("service_2w2bj45","template_p51jx8t",params)
+.then(function(){
+alert("OTP sent to your email");
+otpSection.style.display="block";
+});
+
+};
+
+
+// VERIFY OTP
+verifyBtn.onclick=function(){
+
+const userOtp=document.getElementById("otpInput").value;
+
+if(userOtp==generatedOTP){
+otpVerified=true;
+alert("OTP Verified Successfully");
+}else{
+alert("Invalid OTP");
+}
+
+};
+
+
+
+// REGISTER
+document.getElementById("registerForm").addEventListener("submit",async(e)=>{
+
+if(!otpVerified){
+alert("Please verify OTP first");
+e.preventDefault();
+return;
+}
+
+e.preventDefault();
+
+const f=e.target;
+
+const data={
+first_name:f.first_name.value,
+last_name:f.last_name.value,
+email:f.email.value,
+password:f.password.value,
+admission_number:f.admission_number.value,
+branch:f.branch.value,
+passed_out_year:f.passed_out_year.value,
+present_working:f.present_working.value,
+designation:f.designation.value,
+city:f.city.value,
+company:f.company.value,
+institution:f.institution.value,
+phone:f.phone.value,
+gender:f.gender.value,
+dob:f.dob.value,
+placement_type:f.placement_type.value
+};
+
+try{
+
+const res=await fetch("http://localhost:3002/register",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(data)
+});
+
+const result=await res.json();
+
+document.getElementById("message").innerText=result.message||result.error;
+
+}catch{
+
+document.getElementById("message").innerText="Server error";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

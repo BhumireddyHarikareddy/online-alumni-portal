@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Contact Us</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f7fb;
+}
+
+.container{
+    width:90%;
+    margin:40px auto;
+    display:flex;
+    background:#fff;
+    border-radius:10px;
+}
+
+.left{
+    width:45%;
+    background:#f1f6fb;
+    padding:40px;
+}
+
+.right{
+    width:55%;
+    padding:40px;
+}
+
+h1,h2{
+    color:#1e3a8a;
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin:12px 0;
+    border:none;
+    border-bottom:2px solid #d1d5db;
+    outline:none;
+    font-size:15px;
+}
+
+textarea{
+    height:120px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#1e3a8a;
+    color:white;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#163172;
+}
+
+.info p{
+    margin:15px 0;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LEFT SIDE -->
+<div class="left">
+    <h2>Contact Information</h2>
+    <div class="info">
+        <p>📍 Anantapur Engineering College Alumni Association (ANECAA ATP)</p>
+        <p>📧 info.anecaa.atp@gmail.com</p>
+        <p>📞 9440521774</p>
+        <p>⏰ Monday – Saturday: 9:00 AM – 5:00 PM</p>
+    </div>
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="right">
+    <h1>Contact Us</h1>
+    <p>We are here to address your queries and provide timely support.</p>
+
+    <h2>Send Message</h2>
+
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <input type="text" id="subject" placeholder="Subject" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+
+    <button onclick="sendMessage()">Send Message</button>
+</div>
+
+</div>
+
+<script>
+function sendMessage(){
+    fetch("ContactServlet",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/x-www-form-urlencoded"
+        },
+        body:
+            "name="+name.value+
+            "&email="+email.value+
+            "&subject="+subject.value+
+            "&message="+message.value
+    })
+    .then(res=>res.text())
+    .then(data=>{
+        alert(data);
+        document.querySelectorAll("input,textarea").forEach(e=>e.value="");
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Core Managing Committee</title>
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ---------- GLOBAL ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+}
+
+/* ---------- HEADER ---------- */
+.header {
+    background: linear-gradient(135deg, #1f3c88, #244a9b);
+    color: white;
+    padding: 55px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background: #4fd1c5;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-btn i {
+    margin-right: 6px;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ---------- CONTAINER ---------- */
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* ---------- MEMBER CARD ---------- */
+.member {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    gap: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.member.reverse {
+    flex-direction: row-reverse;
+}
+
+.member img {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #e6eefc;
+}
+
+/* ---------- INFO ---------- */
+.info h2 {
+    color: #1f3c88;
+    font-size: 26px;
+    margin-bottom: 6px;
+}
+
+.info h3 {
+    color: #3b6edc;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.info p {
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.info i {
+    color: #20c997;
+    margin-right: 10px;
+}
+
+.role {
+    display: inline-block;
+    margin-top: 12px;
+    color: #3b6edc;
+    font-weight: 600;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .member,
+    .member.reverse {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <a href="#" class="back-btn">
+        <i class="fa fa-arrow-left"></i> Back to Home
+    </a>
+
+    <h1>Core Managing Committee</h1>
+    <p>Meet the leaders and members of our alumni association</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- MEMBER 1 -->
+    <div class="member">
+        <img src="images/chenna.jpg" alt="P. Chenna Reddy">
+        <div class="info">
+            <h2>P. Chenna Reddy</h2>
+            <h3>Professor in CSE and Principal</h3>
+
+            <p><i class="fa fa-envelope"></i> principal.cea@jntua.ac.in</p>
+            <p><i class="fa fa-phone"></i> 9000551425</p>
+
+            <span class="role">President From 15-08-2024 till date</span>
+        </div>
+    </div>
+
+    <!-- MEMBER 2 -->
+    <div class="member reverse">
+        <img src="images/sankar.jpg" alt="Dr. V. Sankar">
+        <div class="info">
+            <h2>Dr. V. Sankar</h2>
+            <h3> Vice President of ANECAA ATP</h3>
+
+            <p><i class="fa fa-envelope"></i> anecaa.atp@jntua.ac.in</p>
+            <p><i class="fa fa-phone"></i> 9440521774</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/* ---------- SIMPLE ANIMATION ---------- */
+document.querySelectorAll(".member").forEach((card, index) => {
+    setTimeout(() => {
+        card.style.transition = "0.6s ease";
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+    }, index * 300);
+});
+</script>
+
+</body>
+</html>

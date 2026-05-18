@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login | Alumni Portal</title>
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Admin Login</h2>
+
+  <form id="adminLoginForm">
+    <label>Email Address</label>
+    <input type="email" name="email" placeholder="Enter admin email" required>
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Enter password" required>
+
+    <button type="submit">Login</button>
+
+    <div id="loginMessage" style="margin-top:10px;"></div>
+  </form>
+</div>
+
+<script>
+document.getElementById('adminLoginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const email = e.target.email.value;
+  const password = e.target.password.value;
+  const msg = document.getElementById('loginMessage');
+
+  try {
+    const res = await fetch('http://localhost:3000/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      msg.style.color = 'green';
+      msg.innerText = 'Admin login successful';
+
+      localStorage.setItem('adminData', JSON.stringify(result.admin));
+
+      setTimeout(() => {
+        window.location.href = 'admin_dash.html';
+      }, 800);
+    } else {
+      msg.style.color = 'red';
+      msg.innerText = result.error;
+    }
+  } catch {
+    msg.style.color = 'red';
+    msg.innerText = 'Server error';
+  }
+});
+</script>
+
+</body>
+</html>

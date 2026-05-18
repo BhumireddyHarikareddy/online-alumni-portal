@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ANECAA Alumni Portal</title>
+  <style>
+    /* ===== GENERAL STYLES ===== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    /* ===== HEADER ===== */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background-color: #f1f1f1;
+    }
+
+    .top-header .logo {
+      height: 70px;
+    }
+
+    .top-header .title {
+      text-align: center;
+    }
+
+    .top-header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .top-header h2 {
+      margin: 5px 0;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    .top-header p {
+      margin: 0;
+      font-weight: bold;
+      color: #555;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background-color: #2c3e50;
+    }
+
+    .navbar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .navbar ul li {
+      padding: 12px 20px;
+    }
+
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .navbar ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== UPDATES ===== */
+    .updates {
+      background-color: #e74c3c; /* Red background for visibility */
+      color: #fff; /* White text */
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      font-weight: bold;
+    }
+
+    .updates .label {
+      margin-right: 15px;
+      font-size: 16px;
+    }
+
+    .scroll-container {
+      overflow: hidden;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .scroll-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll 15s linear infinite;
+      font-size: 16px;
+      color: #fff; /* White scrolling text */
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ===== SLIDER ===== */
+    .slider {
+      position: relative;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .slider img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* ===== SLIDER CAPTION ===== */
+    .slider-caption {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about {
+      background-color: #f9f9f9;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .about p {
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto 15px auto;
+      color: #34495e;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="top-header">
+  <img src="images/logo-left.png" class="logo" alt="College Logo">
+
+  <div class="title">
+    <h1>Master of Computer Applications Alumni Association</h1>
+    <h2>Erst While AEC (Anantapur Engineering College) / JNTUA CEA</h2>
+    <p>ANECAA</p>
+  </div>
+
+  <img src="images/logo-right.png" class="logo" alt="75 Years Logo">
+</header>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+ <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="events.html" target="_blank">Events</a></li>
+    <li><a href="Gallery.html">Gallery</a></li>
+    <li><a href="contact.html" target="_blank">Contact</a></li>
+    <li><a href="committe.html" target="_blank">Committee</a></li>
+    <li><a href="register.html"> Register</a></li>
+    <li><a href="login.html">Login</a></li>
+    <li><a href="https://anecaaatp.in" target="_blank">Official Website</a></li>
+    <li><a href="admin_login.html">Admin</a></li>
+ </ul>
+</nav>
+
+<!-- ===== MODERN LATEST UPDATES ===== -->
+<div class="updates">
+  <span class="label">🔔 Latest Updates</span>
+  <div class="scroll-container">
+    <div class="scroll-text">
+      📢 Alumni job portal launched &nbsp;&nbsp; | &nbsp;&nbsp;
+      💼 New events added &nbsp;&nbsp; | &nbsp;&nbsp;
+      🎓 Reunion registration open &nbsp;&nbsp; | &nbsp;&nbsp;
+      🏆 Alumni achievements updated
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDER ===== -->
+<div class="slider">
+  <img id="autoSlide" src="images/slide1.jpg" class="slide active">
+  <button class="prev" onclick="prevSlide()">❮</button>
+  <button class="next" onclick="nextSlide()">❯</button>
+</div>
+<div class="slider-caption" id="sliderCaption"></div>
+
+<!-- ===== ABOUT MCA & JNTUA ===== -->
+<section class="about">
+  <div class="about-container">
+    <h2>About MCA & JNTUA CEA</h2>
+    <p>
+      The Master of Computer Applications (MCA) program at JNTUA College of Engineering, Anantapur (CEA) has been nurturing talented graduates for years.
+      Our alumni have excelled in IT, software development, research, and entrepreneurship across India and abroad. 
+      This portal is dedicated to connecting MCA alumni, sharing achievements, career opportunities, and organizing events to keep the MCA spirit alive.
+    </p>
+    <p>
+      JNTUA CEA, established as a premier engineering institution, continues to focus on innovation, practical learning, and research excellence. 
+      The MCA department emphasizes both technical expertise and holistic development, preparing students for the dynamic IT industry.
+    </p>
+  </div>
+</section>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+let slides = [
+  "images/slide0.jpg",
+  "images/slide1.jpg",
+  "images/slide5.jpg",
+  "images/slide3.jpg",
+  "images/slide2.jpg"
+];
+
+let captions = [
+  "MCA Department – JNTUA College of Engineering, Anantapur",
+  "Campus Life – ANECAA Alumni Activities",
+  "Graduation & Alumni Meet Moments",
+  "Innovation, Learning and Achievements"
+];
+
+let i = 0;
+
+function updateSlide() {
+  document.getElementById("autoSlide").src = slides[i];
+  document.getElementById("sliderCaption").innerText = captions[i];
+}
+
+// Auto slide
+setInterval(() => {
+  i = (i + 1) % slides.length;
+  updateSlide();
+}, 3000);
+
+// Manual controls
+function nextSlide() {
+  i = (i + 1) % slides.length;
+  updateSlide();
+}
+
+function prevSlide() {
+  i = (i - 1 + slides.length) % slides.length;
+  updateSlide();
+}
+
+updateSlide();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | Alumni Portal</title>
+<link rel="stylesheet" href="login.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
+  .login-container {
+    width: 350px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+  }
+  input[type="email"], input[type="password"], input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+  .login-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .login-links a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 0.9em;
+  }
+  .login-links a:hover {
+    text-decoration: underline;
+  }
+  #loginMessage {
+    margin-top: 10px;
+    font-size: 0.95em;
+    text-align: center;
+  }
+  /* CHANGE REGISTER LINK TO BLACK */
+  .register a {
+    color: black;
+    text-decoration: none;
+  }
+  .register a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Login to Your Account</h2>
+
+  <form id="loginForm">
+    <label>Email Address</label>
+    <input type="email" name="email" required>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <div class="login-links">
+      <a href="#" id="forgotLink">Forgot Password?</a>
+    </div>
+
+    <button type="submit">Login</button>
+
+    <div id="loginMessage"></div>
+
+    <p class="register">
+      Don’t have an account?
+      <a href="register.html">Register here</a>
+    </p>
+  </form>
+</div>
+
+<script>
+const loginForm = document.getElementById('loginForm');
+const loginMessage = document.getElementById('loginMessage');
+const forgotLink = document.getElementById('forgotLink');
+
+// LOGIN SUBMIT
+loginForm.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const email = e.target.email.value;
+  const password = e.target.password.value;
+
+  try {
+    const res = await fetch('http://localhost:3003/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, password})
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      loginMessage.style.color = 'green';
+      loginMessage.innerText = 'Login successful...';
+      localStorage.setItem('studentData', JSON.stringify(data.student));
+      setTimeout(() => window.location.href = 'student_dash.html', 1000);
+    } else {
+      loginMessage.style.color = 'red';
+      loginMessage.innerText = data.error;
+    }
+  } catch {
+    loginMessage.style.color = 'red';
+    loginMessage.innerText = 'Server error';
+  }
+});
+
+// FORGOT PASSWORD PROMPT
+forgotLink.addEventListener('click', async e => {
+  e.preventDefault();
+  const email = prompt("Enter your registered email for password reset:");
+  if (!email) return;
+
+  const newPassword = prompt("Enter your new password:");
+  if (!newPassword) return;
+
+  try {
+    const res = await fetch('http://localhost:3003/forgot-password', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, new_password: newPassword})
+    });
+    const data = await res.json();
+
+    loginMessage.style.color = res.ok ? 'green' : 'red';
+    loginMessage.innerText = data.message || data.error;
+
+  } catch {
+    loginMessage.style.color = 'red';
+    loginMessage.innerText = "Server error";
+  }
+});
+</script>
+
+</body>
+</html>

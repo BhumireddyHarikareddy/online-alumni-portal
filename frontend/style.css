@@ -1,0 +1,122 @@
+/* ===============================
+   GLOBAL
+================================ */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: #fff;
+}
+
+.logo {
+  width: 80px;
+}
+
+.title {
+  text-align: center;
+}
+
+.title h1 {
+  color: #1e3c72;
+  margin: 0;
+}
+
+/* ===============================
+   NAVBAR
+================================ */
+.navbar {
+  background: #1e3c72;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li {
+  margin: 0 12px;
+}
+
+/* 🔥 FORCE ANCHOR LINKS WHITE */
+.navbar a,
+.navbar a:link,
+.navbar a:visited,
+.navbar a:hover,
+.navbar a:active {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+/* ===============================
+   AUTH BUTTONS (ANCHOR STYLE)
+================================ */
+.auth-buttons a {
+  margin-left: 10px;
+  padding: 6px 15px;
+  border-radius: 20px;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}
+
+/* ===============================
+   UPDATES BAR
+================================ */
+.updates {
+  background: #4c669f;
+  color: #ffffff;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* ===============================
+   SLIDER
+================================ */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  background: rgba(0,0,0,0.5);
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }

@@ -1,0 +1,383 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 230px;
+  background: #1a237e;
+  color: white;
+  height: 100vh;
+  position: fixed;
+}
+
+.sidebar h2 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.sidebar ul li:hover {
+  background: #3949ab;
+}
+
+/* HEADER */
+.top-header {
+  position: fixed;
+  left: 230px;
+  width: calc(100% - 230px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: white;
+  border-bottom: 2px solid #ddd;
+}
+
+.logo { width: 60px; }
+
+.title {
+  text-align: center;
+  flex: 1;
+}
+
+/* MAIN */
+.main {
+  margin-left: 230px;
+  margin-top: 80px;
+  padding: 20px;
+  width: 100%;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #1a237e;
+  color: white;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+/* SECTIONS */
+.section { display: none; }
+.active { display: block; }
+
+/* GALLERY */
+#galleryPreview img {
+  width: 120px;
+  height: 100px;
+  margin: 10px;
+  border-radius: 6px;
+}
+
+/* DONATIONS */
+.donation-card {
+  background: #f1f3f6;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+/* EVENTS */
+.event-card {
+  background: #f1f3f6;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+button {
+  padding: 8px 12px;
+  background: #1a237e;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>Admin Panel</h2>
+  <ul>
+    <li onclick="showSection('students')">👨‍🎓 Students</li>
+    <li onclick="showSection('gallery')">🖼 Gallery</li>
+    <!-- <li onclick="showSection('donations')">💰 Donations</li> -->
+    <li onclick="showSection('events')">📅 Events</li>
+  </ul>
+</div>
+
+<!-- HEADER -->
+<header class="top-header">
+  <img src="images/logo-left.png" class="logo">
+  <div class="title">
+    <h3>MCA Alumni Association - JNTUA</h3>
+  </div>
+  <img src="images/logo-right.png" class="logo">
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- STUDENTS -->
+<div id="students" class="card section active">
+  <h3>Registered Students</h3>
+
+  <div class="filters">
+    <input type="text" id="searchName" placeholder="Search name / admission / email" onkeyup="searchStudents()">
+
+    <select id="genderFilter" onchange="filterByGender()">
+      <option value="">All</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <select id="yearFilter" onchange="filterByYear()">
+      <option value="">All Years</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Branch</th>
+        <th>Year</th>
+        <th>Admission No</th>
+        <th>Working</th>
+        <th>Designation</th>
+        <th>City</th>
+        <th>Phone</th>
+        <th>Gender</th>
+        <th>DOB</th>
+        <th>Institution</th>
+        <th>Placement</th>
+        <th>Company</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+  </table>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery" class="card section">
+  <h3>Gallery</h3>
+  <input id="galleryUrl" placeholder="Image URL">
+  <button onclick="addImage()">Add</button>
+  <div id="galleryPreview"></div>
+</div>
+
+<!-- DONATIONS -->
+<div id="donations" class="card section">
+  <h3>Donations</h3>
+  <div id="donationList"></div>
+</div>
+
+<!-- EVENTS -->
+<div id="events" class="card section">
+  <h3>Add Event</h3>
+
+  <input id="eventTitle" placeholder="Event Title"><br><br>
+  <input type="date" id="eventDate"><br><br>
+  <textarea id="eventDesc" placeholder="Description"></textarea><br><br>
+
+  <button onclick="addEvent()">Add Event</button>
+
+  <hr>
+
+  <h3>All Events</h3>
+  <div id="eventList"></div>
+</div>
+
+</div>
+
+<script>
+let allStudents = [];
+
+/* SWITCH SECTION */
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* STUDENTS */
+async function loadStudents() {
+  const res = await fetch("http://localhost:3000/admin/students");
+  allStudents = await res.json();
+  displayStudents(allStudents);
+}
+
+function displayStudents(data) {
+  const table = document.getElementById("studentTable");
+  table.innerHTML = "";
+
+  data.forEach(s => {
+    table.innerHTML += `
+      <tr>
+        <td>${s.first_name} ${s.last_name}</td>
+        <td>${s.email}</td>
+        <td>${s.branch || "-"}</td>
+        <td>${s.passed_out_year || "-"}</td>
+        <td>${s.admission_number || "-"}</td>
+        <td>${s.present_working || "-"}</td>
+        <td>${s.designation || "-"}</td>
+        <td>${s.city || "-"}</td>
+        <td>${s.phone || "-"}</td>
+        <td>${s.gender || "-"}</td>
+        <td>${s.dob || "-"}</td>
+        <td>${s.institution || "-"}</td>
+        <td>${s.placement_type || "-"}</td>
+        <td>${s.company || "-"}</td>
+        <td>${s.created_at}</td>
+      </tr>
+    `;
+  });
+}
+
+/* SEARCH */
+function searchStudents() {
+  const search = document.getElementById("searchName").value.toLowerCase();
+
+  const filtered = allStudents.filter(s =>
+    (s.first_name + " " + s.last_name).toLowerCase().includes(search) ||
+    (s.admission_number || "").toLowerCase().includes(search) ||
+    (s.email || "").toLowerCase().includes(search)
+  );
+
+  displayStudents(filtered);
+}
+
+/* FILTERS */
+function filterByGender() {
+  const g = document.getElementById("genderFilter").value;
+  if (!g) return displayStudents(allStudents);
+  displayStudents(allStudents.filter(s => s.gender === g));
+}
+
+function filterByYear() {
+  const y = document.getElementById("yearFilter").value;
+  if (!y) return displayStudents(allStudents);
+  displayStudents(allStudents.filter(s => s.passed_out_year == y));
+}
+
+function loadYearFilter() {
+  const y = document.getElementById("yearFilter");
+  for (let i = 1996; i <= 2026; i++) {
+    let o = document.createElement("option");
+    o.value = i; o.textContent = i;
+    y.appendChild(o);
+  }
+}
+
+/* GALLERY ADD */
+async function addImage() {
+  const url = document.getElementById("galleryUrl").value;
+
+  await fetch("http://localhost:3000/admin/gallery", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ image_url: url })
+  });
+
+  loadGallery();
+}
+
+/* EVENTS ADD */
+async function addEvent() {
+  const title = eventTitle.value;
+  const date = eventDate.value;
+  const desc = eventDesc.value;
+
+  await fetch("http://localhost:3000/admin/events", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ title, event_date: date, description: desc })
+  });
+
+  alert("Event Added");
+  loadEvents();
+}
+
+/* LOAD FUNCTIONS */
+async function loadGallery() {
+  const res = await fetch("http://localhost:3000/gallery");
+  const data = await res.json();
+  galleryPreview.innerHTML = data.map(i => `<img src="${i.image_url}">`).join("");
+}
+
+async function loadDonations() {
+  const res = await fetch("http://localhost:3000/donations");
+  const data = await res.json();
+  donationList.innerHTML = data.map(d => `<div class="donation-card"><b>${d.name}</b> ₹${d.amount}</div>`).join("");
+}
+
+async function loadEvents() {
+  const res = await fetch("http://localhost:3000/events");
+  const data = await res.json();
+  eventList.innerHTML = data.map(e => `
+    <div class="event-card">
+      <b>${e.title}</b><br>
+      📅 ${e.event_date}<br>
+      ${e.description || ""}
+    </div>
+  `).join("");
+}
+
+/* INIT */
+loadStudents();
+loadGallery();
+loadDonations();
+loadEvents();
+loadYearFilter();
+</script>
+
+</body>
+</html>

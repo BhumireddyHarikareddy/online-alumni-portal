@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Dashboard</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6f9;
+}
+.header {
+  background: #1a237e;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.card {
+  background: white;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 8px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+.item {
+  background: #f1f3f6;
+  padding: 12px;
+  border-radius: 6px;
+}
+.item span {
+  font-size: 12px;
+}
+.item strong {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>Student Dashboard</h2>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="card">
+  <h3>Student Details</h3>
+
+  <div class="grid">
+    <div class="item"><span>Name</span><strong id="name"></strong></div>
+    <div class="item"><span>Admission</span><strong id="admission"></strong></div>
+    <div class="item"><span>Email</span><strong id="email"></strong></div>
+    <div class="item"><span>Branch</span><strong id="branch"></strong></div>
+    <div class="item"><span>Year</span><strong id="year"></strong></div>
+    <div class="item"><span>Working</span><strong id="working"></strong></div>
+    <div class="item"><span>Designation</span><strong id="designation"></strong></div>
+    <div class="item"><span>City</span><strong id="city"></strong></div>
+    <div class="item"><span>Phone</span><strong id="phone"></strong></div>
+    <div class="item"><span>Gender</span><strong id="gender"></strong></div>
+    <div class="item"><span>DOB</span><strong id="dob"></strong></div>
+    <div class="item"><span>Placement</span><strong id="placement"></strong></div>
+  </div>
+</div>
+
+<script>
+const student = JSON.parse(localStorage.getItem("studentData"));
+
+if (!student) {
+  window.location.href = "login.html";
+}
+
+// FIXED NAME
+document.getElementById("name").innerText =
+  student.first_name + " " + student.last_name;
+
+document.getElementById("admission").innerText = student.admission_number;
+document.getElementById("email").innerText = student.email;
+document.getElementById("branch").innerText = student.branch;
+document.getElementById("year").innerText = student.passed_out_year;
+document.getElementById("working").innerText = student.present_working;
+document.getElementById("designation").innerText = student.designation;
+document.getElementById("city").innerText = student.city;
+document.getElementById("phone").innerText = student.phone;
+
+// NEW FIELDS
+document.getElementById("gender").innerText = student.gender;
+document.getElementById("dob").innerText = student.dob;
+document.getElementById("placement").innerText = student.placement_type;
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

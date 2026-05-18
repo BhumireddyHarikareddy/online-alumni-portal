@@ -1,0 +1,177 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #e9eef5;
+}
+
+/* HEADER */
+.header {
+  background: #1f3c6e;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-left img {
+  width: 60px;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.header-left p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.header-right p {
+  margin: 0;
+  font-size: 14px;
+  text-align: right;
+}
+
+/* CONTAINER */
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* CARD */
+.card {
+  background: #23457d;
+  color: white;
+  width: 650px;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* FORM */
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+/* EMAIL + OTP */
+.email-row {
+  display: flex;
+  margin-top: 5px;
+}
+
+.email-row input {
+  flex: 1;
+  border-radius: 10px 0 0 10px;
+}
+
+.email-row button {
+  background: #7a7f86;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.email-row button:hover {
+  background: #666b70;
+}
+
+/* NOTE */
+.note {
+  font-size: 13px;
+  margin-top: 15px;
+  color: #dce3f0;
+}
+
+/* BUTTON */
+.create-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 20px 0;
+  background: #28a745;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.create-btn:hover {
+  background: #218838;
+}
+
+/* LOGIN LINK */
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.login-link a {
+  color: #00ff4c;
+  text-decoration: none;
+  font-weight: bold;
+}
+.header-right {
+  text-align: right;
+  font-size: 14px;
+}
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #00ff88;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
